@@ -1,0 +1,24 @@
+{
+  "name": "nuzio-ai",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "concurrently -n api,web -c cyan,magenta \"npm run dev -w backend\" \"npm run dev -w frontend\"",
+    "dev:server": "npm run dev -w backend",
+    "build": "npm run build -w frontend",
+    "test": "npm test -w backend",
+    "seed": "npm run seed -w backend",
+    "test:e2e": "node scripts/browser-check.mjs",
+    "format:frontend": "prettier --write \"frontend/{app,components,constants,features,hooks,lib,providers,services,styles}/**/*.{js,css}\"",
+    "check:frontend-format": "prettier --check \"frontend/{app,components,constants,features,hooks,lib,providers,services,styles}/**/*.{js,css}\""
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "concurrently": "^9.2.1",
+    "prettier": "^3.9.8"
+  }
+}

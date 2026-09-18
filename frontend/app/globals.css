@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650;700;750;800&family=Instrument+Serif:ital@0;1&display=swap');
+@import '../styles/base.css';
+@import '../styles/auth.css';
+@import '../styles/onboarding.css';
+@import '../styles/news.css';
+@import '../styles/settings.css';
+@import '../styles/dialogs.css';
+@import '../styles/theme.css';
+@import '../styles/responsive.css';
+@import '../styles/player.css';
+@import '../styles/auth-pages.css';

@@ -1,0 +1,82 @@
+@keyframes wave {
+  to {
+    transform: scaleY(0.45);
+    transform-origin: bottom;
+  }
+}
+@media (min-width: 500px) {
+  body {
+    padding: 32px 0;
+    background: radial-gradient(ellipse at top, #191322, #080808 60%);
+  }
+  .phone {
+    height: 844px;
+    min-height: 844px;
+    border: 1px solid #323232;
+    border-radius: 53px;
+    box-shadow: 0 25px 80px #000c;
+  }
+  .brief-content {
+    height: 660px;
+  }
+}
+@media (max-height: 780px) and (max-width: 499px) {
+  .phone {
+    min-height: 100dvh;
+  }
+  .status-bar {
+    height: 45px;
+    padding-top: 19px;
+  }
+  .island {
+    height: 29px;
+    top: 7px;
+  }
+  .onboarding-header {
+    height: 55px;
+  }
+  .progress {
+    margin-bottom: 15px;
+  }
+  .voice-card {
+    min-height: 78px;
+    padding: 11px;
+  }
+  .length-label {
+    margin-top: 15px !important;
+  }
+  .length-options button {
+    height: 38px;
+  }
+  .bottom-action {
+    bottom: 16px;
+  }
+  .primary {
+    height: 48px;
+  }
+  .time-picker {
+    margin-top: 20px;
+  }
+  .time-picker button {
+    height: 42px;
+  }
+  .ready-heading {
+    margin: 12px 0 25px;
+  }
+  .ready-check {
+    width: 72px;
+    height: 72px;
+  }
+  .language .center-logo {
+    padding-top: 45px;
+    margin-bottom: 40px;
+  }
+  .login-title {
+    margin-top: 95px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+  }
+}

@@ -1,0 +1,26 @@
+.theme-light {
+  --bg: #f4f1f8;
+  --text: #28212f;
+  --muted: #75697b;
+  --panel: #fff;
+  --border: #d9cede;
+}
+.theme-light .story-card,
+.theme-light .settings-profile,
+.theme-light .settings-links > button,
+.theme-light .settings-toggles,
+.theme-light .plan-card,
+.theme-light .player-card {
+  background: #fdfaff;
+  border-color: #d9cede;
+}
+.theme-light .bottom-nav {
+  background: #f3eef9ee;
+  border-color: #d0c1df;
+}
+.theme-light .app-header {
+  border-color: #d9cede;
+}
+.theme-light .subtitle {
+  color: #75697b;
+}

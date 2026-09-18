@@ -1,0 +1,267 @@
+.splash {
+  height: calc(100% - 58px);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+}
+.splash > .logo {
+  position: absolute;
+  top: 35%;
+}
+.splash-glow {
+  position: absolute;
+  top: 65px;
+  left: 0;
+  right: 0;
+  height: 430px;
+  background: radial-gradient(ellipse, #512bab33, transparent 66%);
+  pointer-events: none;
+}
+.splash-tag {
+  position: absolute;
+  top: 50%;
+  text-align: center;
+}
+.splash-tag h1 {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-style: italic;
+  font-size: 31px;
+  font-weight: 400;
+  letter-spacing: -1.3px;
+}
+.splash-tag span {
+  display: block;
+  margin-top: 10px;
+  font: 8px monospace;
+  color: #7f7771;
+  letter-spacing: 2px;
+}
+.curating {
+  position: absolute;
+  bottom: 28%;
+  font: 8px monospace;
+  color: #827d75;
+  letter-spacing: 1.5px;
+}
+.curating i {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  background: var(--mint);
+  border-radius: 50%;
+  margin-right: 5px;
+}
+.language .center-logo {
+  padding-top: 65px;
+  margin-bottom: 55px;
+}
+.language:before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 52px;
+  left: 0;
+  right: 0;
+  height: 260px;
+  background: radial-gradient(ellipse at top, #5733ab38, transparent 75%);
+}
+.language h1 {
+  font-size: 25px;
+}
+.language-options {
+  display: grid;
+  gap: 10px;
+  margin-top: 23px;
+}
+.option-card {
+  width: 100%;
+  height: 78px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 17px 18px;
+  border: 1px solid #343434;
+  background: #191919;
+  border-radius: 17px;
+  text-align: left;
+}
+.option-card.selected {
+  border-color: #7651ff;
+  background: #1c1535;
+  box-shadow: 0 0 18px #7449ff13;
+}
+.flag {
+  font-size: 24px;
+}
+.option-card strong {
+  display: block;
+  font-size: 14px;
+}
+.option-card small {
+  display: block;
+  color: #aba4a0;
+  font-size: 10px;
+  margin-top: 5px;
+}
+.option-card .radio-dot {
+  margin-left: auto;
+  border: 1px solid #4b494a;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+}
+.option-card.selected .radio-dot {
+  border: 7px solid #754aff;
+  background: #fff;
+}
+.location-card {
+  display: flex;
+  position: relative;
+  gap: 12px;
+  border: 1px solid #333;
+  background: #181818;
+  border-radius: 17px;
+  padding: 17px;
+  margin-top: 22px;
+  min-height: 113px;
+}
+.square-icon {
+  width: 37px;
+  height: 37px;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  background: #30302e;
+  flex-shrink: 0;
+  font-size: 20px;
+}
+.location-card > .square-icon {
+  background: #27203d;
+  border: 1px solid #58408c;
+}
+.location-card strong {
+  font-size: 12px;
+  display: block;
+  margin-top: 2px;
+}
+.location-card small {
+  font-size: 10px;
+  display: block;
+  color: var(--muted);
+  margin-top: 7px;
+}
+.location-status {
+  font: 8px monospace;
+  letter-spacing: 1px;
+  color: #8f8780;
+  margin-top: 21px;
+}
+.toggle {
+  width: 42px;
+  height: 24px;
+  border-radius: 30px;
+  background: #414141;
+  padding: 3px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+.toggle span {
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px #0004;
+}
+.toggle.on {
+  background: var(--mint);
+}
+.toggle.on span {
+  margin-left: auto;
+}
+.location-card > .toggle {
+  position: absolute;
+  right: 18px;
+  bottom: 17px;
+}
+.language .primary {
+  color: #fff;
+}
+.login .center-logo {
+  padding-top: 76px;
+}
+.login-glow {
+  position: absolute;
+  inset: 45px 0 auto;
+  height: 380px;
+  background: radial-gradient(ellipse, #482ba935, transparent 72%);
+  z-index: -1;
+}
+.login-title {
+  margin-top: 113px;
+  padding: 0 10px;
+}
+.login-title h1 {
+  font-size: 33px;
+  line-height: 1.14;
+  letter-spacing: -1.1px;
+}
+.login-title em {
+  font-size: 1.15em;
+}
+.login-title p {
+  font-size: 12px;
+  color: #aca6a1;
+  line-height: 1.9;
+  margin-top: 19px;
+}
+.login .bottom-action {
+  left: 28px;
+  right: 28px;
+  bottom: 36px;
+  gap: 5px;
+}
+.google-button {
+  width: 100%;
+  height: 57px;
+  background: #272727;
+  border: 1px solid #343434;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.google-g {
+  font-weight: 800;
+  font-size: 23px;
+  background: conic-gradient(
+    #4285f4 0deg 100deg,
+    #34a853 100deg 170deg,
+    #fbbc05 170deg 230deg,
+    #ea4335 230deg 290deg,
+    #4285f4 290deg
+  );
+  background-clip: text;
+  color: transparent;
+}
+.email-entry {
+  font-size: 9px;
+  color: #b6a5ff;
+  padding: 4px;
+}
+.terms {
+  text-align: center;
+  font-size: 8px;
+  color: #77716b;
+  margin-top: 4px;
+}
+.terms button {
+  font-size: 8px;
+  color: #b5a2ff;
+  text-decoration: underline;
+  padding: 0;
+}

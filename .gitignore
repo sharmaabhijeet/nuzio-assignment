@@ -1,0 +1,9 @@
+node_modules/
+data/
+.env
+.env.local
+.next/
+dist/
+coverage/
+
+.next-browser-check/

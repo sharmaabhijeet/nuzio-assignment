@@ -5,7 +5,7 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import request from 'supertest';
 import { createApp } from '../src/app.js';
 import { Article, User, Session, Bookmark } from '../src/models/index.js';
-import { insertMissingArticles } from '../src/repositories/article.repository.js';
+import { insertMissingArticles } from '../src/routes/news.routes.js';
 import { demoStories } from '../../shared/stories.js';
 
 test('MongoDB-backed authentication, personalization and bookmark isolation', async t => {

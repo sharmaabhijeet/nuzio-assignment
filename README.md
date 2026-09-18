@@ -19,7 +19,7 @@ Open http://localhost:3000 and create an account. The API runs on port 3001. Nex
 
 ## Backend organization
 
-The Express API is separated into models, repositories, validations, controllers, services, routes, middleware, configuration, and serializers. See [backend/README.md](backend/README.md) for responsibilities and the request flow.
+The Express API has one route file per resource (auth, users, news, bookmarks) plus Mongoose models. See [backend/README.md](backend/README.md) for the layout and what not to break.
 
 ## Frontend organization
 

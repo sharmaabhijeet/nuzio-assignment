@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { topics } from '../constants/content.js';
+import { topics } from '../content.js';
 
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true, maxlength: 80 },

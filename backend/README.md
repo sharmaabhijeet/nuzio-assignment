@@ -1,49 +1,40 @@
-# Backend structure
+# Backend
 
-The API uses Node.js, Express 5 and Mongoose. Existing endpoint paths, response envelopes, MongoDB collection names, indexes, cookies, and session expiration remain compatible with the frontend.
+Node.js, Express 5, Mongoose.
 
 ```text
 src/
-  app.js              Express middleware and router composition
-  index.js            Server startup and shutdown
-  seed.js             Demo seed entry point
-  config/             Environment, database connection, session configuration
-  constants/          Shared topic/category definitions
-  routes/             Endpoint paths, auth boundary and validation middleware
-  validations/        Request body, query and parameter checks/normalization
-  controllers/        HTTP status codes, cookies, request/response handling
-  services/           Authentication, personalization and bookmark business rules
-  repositories/       All application database queries and writes
-  models/             Individual Mongoose schemas and indexes
-  middleware/         Authentication, validation, origin checks, rate limiting, errors
-  serializers/        Public response shapes; prevent password exposure
-  utils/              Password hashing, session tokens and ApiError
+  app.js       Express app: middleware + route mounts
+  index.js     Server startup/shutdown
+  seed.js      Demo seed entry point
+  config.js    Env config, DB connect, session settings
+  errors.js    ApiError + 404/error handlers
+  content.js   Topic/category list (re-exported from ../shared)
+  models/      Mongoose schemas (User, Session, Article, Bookmark)
+  routes/      One file per resource: routes + validation + handlers together
 ```
 
-Request flow: **route → validation → controller → service → repository → model**. Protected endpoints pass through session authentication before validation. Models also validate persistence constraints. Request validators return only accepted fields in `req.validated`; controllers never pass arbitrary request objects to Mongoose.
+Each `routes/*.routes.js` file owns everything for that resource — the Express router, request validation, and the Mongoose queries. That's on purpose: at this size, splitting auth into five different files (route/controller/service/repository/validator) just makes you jump around to read one flow. `auth.routes.js` is the one exception worth knowing: it also exports `requireAuth`, since the session-check middleware needs the same token-hashing helpers as login/logout.
 
-- Keep Express `req`/`res` in controllers and middleware.
-- Keep Mongoose query construction in repositories. Services may coordinate several repositories.
-- Add new request rules in `validations/`, then attach them in the appropriate route.
-- Throw `ApiError(status, message)` for expected failures; centralized error middleware handles them. Express 5 forwards rejected async handlers automatically.
-- Preserve the explicitly checked session expiry even though MongoDB also has a TTL index.
-- Preserve the compound bookmark index and scope every bookmark query to the signed-in user.
-- The seed uses the article repository and `$setOnInsert` to avoid overwriting existing stories.
-
-## Route registration in app.js
-
-Middleware is registered first, resource routers second, then the 404 and centralized error handlers. `app.js` shows each mount explicitly; `index.js` only handles database connection and server lifecycle.
+`app.js` wires it all together — middleware first, then routes, then the 404/error handlers last (order matters for Express).
 
 | Mount | Access | Endpoints |
 | --- | --- | --- |
 | `/api` | Public | `GET /health`, `GET /topics` |
-| `/api/auth` | Register/login public; me/logout authenticated | `POST /register`, `POST /login`, `GET /me`, `POST /logout` |
-| `/api/users` | Authenticated | `GET /me`, `PUT /interests` |
-| `/api/news` | Authenticated | `GET /`, `GET /:id` |
-| `/api/bookmarks` | Authenticated | `GET /`, `PUT /:id`, `DELETE /:id` |
+| `/api/auth` | Register/login public; me/logout need a session | `POST /register`, `POST /login`, `GET /me`, `POST /logout` |
+| `/api/users` | Needs a session | `GET /me`, `PUT /interests` |
+| `/api/news` | Needs a session | `GET /`, `GET /:id` |
+| `/api/bookmarks` | Needs a session | `GET /`, `PUT /:id`, `DELETE /:id` |
 
-`PUT /api/interests` remains an authenticated compatibility alias using the same user controller and validation. `GET /api/auth/me` remains available alongside `GET /api/users/me`. Unknown routes return a JSON 404; protected resource routes require a valid session.
+`PUT /api/interests` (no `/users` prefix) is kept around as an alias for older frontend code that calls it directly.
+
+A few things not to break if you touch this:
+- Session tokens are hashed (SHA-256) before hitting MongoDB — the raw cookie value is never stored, so a DB leak alone doesn't hand out working sessions.
+- Login always runs the password hash even for an unknown email (fake salt), so response timing doesn't leak whether an account exists.
+- `findActiveSession` checks `expiresAt` explicitly rather than trusting Mongo's TTL index alone — the TTL sweep runs on its own schedule, not instantly.
+- Bookmark queries are always scoped to `req.user._id` — never trust an `:id` param alone.
+- The seed (`insertMissingArticles` in `news.routes.js`) uses `$setOnInsert` so re-running it never overwrites existing articles.
 
 ## Run
 
-From the project root, use `npm run dev -w backend`, `npm run seed`, and `npm test`. Configure `backend/.env` from `.env.example`. Test databases are isolated; no production or local app data is cleared. If MongoDB is installed locally, pass `MONGOMS_SYSTEM_BINARY=/path/to/mongod npm test` to avoid a test binary download.
+From the project root: `npm run dev -w backend`, `npm run seed`, `npm test`. Copy `.env.example` to `.env` first. Tests spin up an isolated in-memory MongoDB (`mongodb-memory-server`) — nothing touches your real database. If you already have MongoDB installed, `MONGOMS_SYSTEM_BINARY=/path/to/mongod npm test` skips the test-binary download.

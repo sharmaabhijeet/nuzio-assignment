@@ -1,5 +1,5 @@
-import { connectDatabase, disconnectDatabase } from './config/database.js';
-import { insertMissingArticles } from './repositories/article.repository.js';
+import { connectDatabase, disconnectDatabase } from './config.js';
+import { insertMissingArticles } from './routes/news.routes.js';
 import { categories, demoStories } from '../../shared/stories.js';
 
 try {

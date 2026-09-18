@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { categories, topics } from '../constants/content.js';
+import { categories, topics } from '../content.js';
 
 const articleSchema = new mongoose.Schema({
   slug: { type: String, unique: true, required: true },

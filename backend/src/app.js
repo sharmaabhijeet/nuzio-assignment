@@ -2,16 +2,32 @@ import express from 'express';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 
-import { getConfig } from './config/env.js';
-import { requireAuth } from './middleware/auth.middleware.js';
-import { apiSecurity } from './middleware/security.middleware.js';
-import { errorHandler, notFound } from './middleware/error.middleware.js';
+import { getConfig } from './config.js';
+import { ApiError, notFound, errorHandler } from './errors.js';
 
 import { createSystemRoutes } from './routes/system.routes.js';
-import { createAuthRoutes } from './routes/auth.routes.js';
-import { createUserRoutes, createLegacyUserRoutes } from './routes/user.routes.js';
-import { createArticleRoutes } from './routes/article.routes.js';
-import { createBookmarkRoutes } from './routes/bookmark.routes.js';
+import { createAuthRoutes, requireAuth } from './routes/auth.routes.js';
+import { createUserRoutes, createLegacyUserRoutes } from './routes/users.routes.js';
+import { createArticleRoutes } from './routes/news.routes.js';
+import { createBookmarkRoutes } from './routes/bookmarks.routes.js';
+
+function apiSecurity(frontendOrigin) {
+  return (req, res, next) => {
+    res.set('Cache-Control', 'no-store');
+    if (!['GET', 'HEAD', 'OPTIONS'].includes(req.method)) {
+      if (
+        req.get('sec-fetch-site') === 'cross-site' ||
+        (req.get('origin') && req.get('origin') !== frontendOrigin)
+      ) {
+        throw new ApiError(403, 'Origin rejected.');
+      }
+      if (['POST', 'PUT', 'PATCH'].includes(req.method) && !req.is('application/json')) {
+        throw new ApiError(415, 'Use application/json.');
+      }
+    }
+    next();
+  };
+}
 
 export function createApp() {
   const app = express();
@@ -25,7 +41,7 @@ export function createApp() {
   app.use(cookieParser());
   app.use('/api', apiSecurity(config.frontendOrigin));
 
-  // Public endpoints; auth.routes protects its own me/logout endpoints.
+  // Public endpoints; auth routes protect their own me/logout endpoints.
   app.use('/api', createSystemRoutes());
   app.use('/api/auth', createAuthRoutes());
 

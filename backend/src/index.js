@@ -1,6 +1,5 @@
 import { createApp } from './app.js';
-import { getConfig } from './config/env.js';
-import { connectDatabase, disconnectDatabase } from './config/database.js';
+import { getConfig, connectDatabase, disconnectDatabase } from './config.js';
 
 try {
   await connectDatabase();
